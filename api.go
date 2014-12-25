@@ -1,6 +1,7 @@
 package wandgo
 
 import (
+	"bytes"
 	"encoding/json"
 	"net/http"
 	"net/url"
@@ -39,6 +40,27 @@ func (a *API) apiGet(url string, v url.Values, data interface{}) error {
 
 func (a *API) apiPost(url string, v url.Values, data interface{}) error {
 	resp, err := a.HTTPClient.PostForm(url, v)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	return decode(resp, data)
+}
+
+func (a *API) apiPostAsJSON(url string, v interface{}, data interface{}) error {
+	j, err := json.Marshal(v)
+	if err != nil {
+		return err
+	}
+
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(j))
+	if err != nil {
+		return err
+	}
+	req.Header.Add("Content-Type", "application/json")
+
+	resp, err := a.HTTPClient.Do(req)
 	if err != nil {
 		return err
 	}
