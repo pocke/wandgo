@@ -9,7 +9,7 @@ type Language struct {
 	Name                  string `json:"name"`
 	RuntimeOptionRaw      bool   `json:"runtime-option-raw"`
 	Version               string `json"version"`
-	// Switches
+	// TODO: Switches
 }
 
 func (a *API) GetLanguages() ([]Language, error) {
