@@ -20,3 +20,17 @@ func TestCompile(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+func TestCompileWhenLanguageDoesNotExists(t *testing.T) {
+	p := &wandgo.CompileParam{
+		Code:     `puts "hoge"`,
+		Compiler: `rubyyyyy`,
+	}
+
+	res, err := api.Compile(p)
+	t.Log(err)
+	if err == nil {
+		t.Logf("Response: %+v", res)
+		t.Error("rubyyyyy doesn't exists. But not return error")
+	}
+}

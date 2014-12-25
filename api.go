@@ -3,6 +3,7 @@ package wandgo
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/url"
 )
@@ -70,5 +71,8 @@ func (a *API) apiPostAsJSON(url string, v interface{}, data interface{}) error {
 }
 
 func decode(resp *http.Response, data interface{}) error {
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("HTTP error: %s", resp.Status)
+	}
 	return json.NewDecoder(resp.Body).Decode(data)
 }
