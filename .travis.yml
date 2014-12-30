@@ -11,4 +11,8 @@ before_install:
   - go get golang.org/x/tools/cmd/cover
 
 script:
-  - "go version | grep '1.3' && go test -v --race || $HOME/gopath/bin/goveralls -repotoken gkaqed3uFOKQJ2j5k9e7C1i0UxHQZUFjc"
+  - "go version | grep '1.3' && go test -v --race || $HOME/gopath/bin/goveralls -repotoken $COVERALLS_TOKEN"
+
+env:
+  global:
+    secure: "hRmYnk7JmaBi3f2ouqB6DDmcBCaX3WOUxsCCRlICy1DR3VA4KlfFjDhUcXGfz0DzrpZkWNMk8/AiS2rxbZ/KL5Xl+nlh2bJ8zWFPQLqzYuhVyC8aPxvEdswTDmP3xh8MureNdv9VoAtTYJHBJIrqDQcVyG95xFVM7sVk/hG3WZU="
